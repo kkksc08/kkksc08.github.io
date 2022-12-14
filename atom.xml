@@ -1,0 +1,1277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://kkksc08.github.io/</id>
+    <title>Myblog</title>
+    <updated>2022-12-14T05:13:44.435Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://kkksc08.github.io/"/>
+    <link rel="self" href="https://kkksc08.github.io/atom.xml"/>
+    <subtitle>三思而后码</subtitle>
+    <logo>https://kkksc08.github.io/images/avatar.png</logo>
+    <icon>https://kkksc08.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2022, Myblog</rights>
+    <entry>
+        <title type="html"><![CDATA[爱心扩散]]></title>
+        <id>https://kkksc08.github.io/post/ai-xin-kuo-san/</id>
+        <link href="https://kkksc08.github.io/post/ai-xin-kuo-san/">
+        </link>
+        <updated>2022-12-14T05:11:19.000Z</updated>
+        <content type="html"><![CDATA[<script language = JavaScript> function password() {
+
+    var testV = 1;
+
+    var pass1 = prompt('please input the password','');
+
+    var passwordforthisarticle = "THUITkkksc08";
+
+    var inputtimemax = 19960319;
+
+    while (testV < inputtimemax) {
+
+    if (!pass1)
+
+    history.go(-1);
+
+    if (pass1 == passwordforthisarticle) {
+
+    break;
+
+    }
+
+    testV+=1;
+
+    var pass1 =
+
+    prompt('Password error!');
+
+    }
+
+    if (pass1!= passwordforthisarticle & testV == inputtimemax)  
+
+    history.go(-1);
+
+    return " ";
+
+    }
+```
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <script src="js/jquery.min.js"></script>
+  </head>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    html,
+    body {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      background: #000;
+    }
+<pre><code>.aa {
+  position: fixed;
+  left: 50%;
+  bottom: 10px;
+  color: #ccc;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+canvas {
+  z-index: 99;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+</code></pre>
+  </style>
+  <body>
+    <!-- 樱花 -->
+    <div id="jsi-cherry-container" class="container">
+      <audio autoplay="autopaly">
+        <source src="renxi.mp3" type="audio/mp3" />
+      </audio>
+      <img class="img" src="./123.png" alt="" />
+      <!-- 爱心 -->
+      <canvas id="pinkboard" class="container"> </canvas>
+    </div>
+  </body>
+</html>
+<script>
+    /*
+     * Settings
+     */
+    var settings = {
+      particles: {
+        length: 500, // maximum amount of particles
+        duration: 2, // particle duration in sec
+        velocity: 100, // particle velocity in pixels/sec
+        effect: -0.75, // play with this for a nice effect
+        size: 30, // particle size in pixels
+      },
+    };
+<pre><code>(function () {
+  var b = 0;
+  var c = [&quot;ms&quot;, &quot;moz&quot;, &quot;webkit&quot;, &quot;o&quot;];
+  for (var a = 0; a &lt; c.length &amp;&amp; !window.requestAnimationFrame; ++a) {
+    window.requestAnimationFrame = window[c[a] + &quot;RequestAnimationFrame&quot;];
+    window.cancelAnimationFrame =
+      window[c[a] + &quot;CancelAnimationFrame&quot;] ||
+      window[c[a] + &quot;CancelRequestAnimationFrame&quot;];
+  }
+  if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function (h, e) {
+      var d = new Date().getTime();
+      var f = Math.max(0, 16 - (d - b));
+      var g = window.setTimeout(function () {
+        h(d + f);
+      }, f);
+      b = d + f;
+      return g;
+    };
+  }
+  if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function (d) {
+      clearTimeout(d);
+    };
+  }
+})();
+
+/*
+ * Point class
+ */
+var Point = (function () {
+  function Point(x, y) {
+    this.x = typeof x !== &quot;undefined&quot; ? x : 0;
+    this.y = typeof y !== &quot;undefined&quot; ? y : 0;
+  }
+  Point.prototype.clone = function () {
+    return new Point(this.x, this.y);
+  };
+  Point.prototype.length = function (length) {
+    if (typeof length == &quot;undefined&quot;)
+      return Math.sqrt(this.x * this.x + this.y * this.y);
+    this.normalize();
+    this.x *= length;
+    this.y *= length;
+    return this;
+  };
+  Point.prototype.normalize = function () {
+    var length = this.length();
+    this.x /= length;
+    this.y /= length;
+    return this;
+  };
+  return Point;
+})();
+
+/*
+ * Particle class
+ */
+var Particle = (function () {
+  function Particle() {
+    this.position = new Point();
+    this.velocity = new Point();
+    this.acceleration = new Point();
+    this.age = 0;
+  }
+  Particle.prototype.initialize = function (x, y, dx, dy) {
+    this.position.x = x;
+    this.position.y = y;
+    this.velocity.x = dx;
+    this.velocity.y = dy;
+    this.acceleration.x = dx * settings.particles.effect;
+    this.acceleration.y = dy * settings.particles.effect;
+    this.age = 0;
+  };
+  Particle.prototype.update = function (deltaTime) {
+    this.position.x += this.velocity.x * deltaTime;
+    this.position.y += this.velocity.y * deltaTime;
+    this.velocity.x += this.acceleration.x * deltaTime;
+    this.velocity.y += this.acceleration.y * deltaTime;
+    this.age += deltaTime;
+  };
+  Particle.prototype.draw = function (context, image) {
+    function ease(t) {
+      return --t * t * t + 1;
+    }
+    var size = image.width * ease(this.age / settings.particles.duration);
+    context.globalAlpha = 1 - this.age / settings.particles.duration;
+    context.drawImage(
+      image,
+      this.position.x - size / 2,
+      this.position.y - size / 2,
+      size,
+      size
+    );
+  };
+  return Particle;
+})();
+
+/*
+ * ParticlePool class
+ */
+var ParticlePool = (function () {
+  var particles,
+    firstActive = 0,
+    firstFree = 0,
+    duration = settings.particles.duration;
+
+  function ParticlePool(length) {
+    // create and populate particle pool
+    particles = new Array(length);
+    for (var i = 0; i &lt; particles.length; i++)
+      particles[i] = new Particle();
+  }
+  ParticlePool.prototype.add = function (x, y, dx, dy) {
+    particles[firstFree].initialize(x, y, dx, dy);
+
+    // handle circular queue
+    firstFree++;
+    if (firstFree == particles.length) firstFree = 0;
+    if (firstActive == firstFree) firstActive++;
+    if (firstActive == particles.length) firstActive = 0;
+  };
+  ParticlePool.prototype.update = function (deltaTime) {
+    var i;
+
+    // update active particles
+    if (firstActive &lt; firstFree) {
+      for (i = firstActive; i &lt; firstFree; i++)
+        particles[i].update(deltaTime);
+    }
+    if (firstFree &lt; firstActive) {
+      for (i = firstActive; i &lt; particles.length; i++)
+        particles[i].update(deltaTime);
+      for (i = 0; i &lt; firstFree; i++) particles[i].update(deltaTime);
+    }
+
+    // remove inactive particles
+    while (
+      particles[firstActive].age &gt;= duration &amp;&amp;
+      firstActive != firstFree
+    ) {
+      firstActive++;
+      if (firstActive == particles.length) firstActive = 0;
+    }
+  };
+  ParticlePool.prototype.draw = function (context, image) {
+    // draw active particles
+    if (firstActive &lt; firstFree) {
+      for (i = firstActive; i &lt; firstFree; i++)
+        particles[i].draw(context, image);
+    }
+    if (firstFree &lt; firstActive) {
+      for (i = firstActive; i &lt; particles.length; i++)
+        particles[i].draw(context, image);
+      for (i = 0; i &lt; firstFree; i++) particles[i].draw(context, image);
+    }
+  };
+  return ParticlePool;
+})();
+
+/*
+ * Putting it all together
+ */
+(function (canvas) {
+  var context = canvas.getContext(&quot;2d&quot;),
+    particles = new ParticlePool(settings.particles.length),
+    particleRate =
+      settings.particles.length / settings.particles.duration, // particles/sec
+    time;
+
+  // get point on heart with -PI &lt;= t &lt;= PI
+  function pointOnHeart(t) {
+    return new Point(
+      160 * Math.pow(Math.sin(t), 3),
+      130 * Math.cos(t) -
+        50 * Math.cos(2 * t) -
+        20 * Math.cos(3 * t) -
+        10 * Math.cos(4 * t) +
+        25
+    );
+  }
+
+  // creating the particle image using a dummy canvas
+  var image = (function () {
+    var canvas = document.createElement(&quot;canvas&quot;),
+      context = canvas.getContext(&quot;2d&quot;);
+    canvas.width = settings.particles.size;
+    canvas.height = settings.particles.size;
+    // helper function to create the path
+    function to(t) {
+      var point = pointOnHeart(t);
+      point.x =
+        settings.particles.size / 2 +
+        (point.x * settings.particles.size) / 350;
+      point.y =
+        settings.particles.size / 2 -
+        (point.y * settings.particles.size) / 350;
+      return point;
+    }
+    // create the path
+    context.beginPath();
+    var t = -Math.PI;
+    var point = to(t);
+    context.moveTo(point.x, point.y);
+    while (t &lt; Math.PI) {
+      t += 0.01; // baby steps!
+      point = to(t);
+      context.lineTo(point.x, point.y);
+    }
+    context.closePath();
+    // create the fill
+    context.fillStyle = &quot;#ea80b0&quot;;
+    context.fill();
+    // create the image
+    var image = new Image();
+    image.src = canvas.toDataURL();
+    return image;
+  })();
+
+  // render that thing!
+  function render() {
+    // next animation frame
+    requestAnimationFrame(render);
+
+    // update time
+    var newTime = new Date().getTime() / 1000,
+      deltaTime = newTime - (time || newTime);
+    time = newTime;
+
+    // clear canvas
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // create new particles
+    var amount = particleRate * deltaTime;
+    for (var i = 0; i &lt; amount; i++) {
+      var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+      var dir = pos.clone().length(settings.particles.velocity);
+      particles.add(
+        canvas.width / 2 + pos.x,
+        canvas.height / 2 - pos.y,
+        dir.x,
+        -dir.y
+      );
+    }
+
+    // update and draw particles
+    particles.update(deltaTime);
+    particles.draw(context, image);
+  }
+
+  // handle (re-)sizing of the canvas
+  function onResize() {
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+  }
+  window.onresize = onResize;
+
+  // delay rendering bootstrap
+  setTimeout(function () {
+    onResize();
+    render();
+  }, 10);
+})(document.getElementById(&quot;pinkboard&quot;));
+</code></pre>
+  </script>
+  <script>
+    var RENDERER = {
+      INIT_CHERRY_BLOSSOM_COUNT: 30,
+      MAX_ADDING_INTERVAL: 10,
+
+      init: function () {
+        this.setParameters();
+        this.reconstructMethods();
+        this.createCherries();
+        this.render();
+        if (
+          navigator.userAgent.match(
+            /(phone|pod|iPhone|iPod|ios|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+          )
+        ) {
+          // var box = document.querySelectorAll(".box")[0];
+          // console.log(box, "移动端");
+          // box.style.marginTop = "65%";
+        }
+      },
+      setParameters: function () {
+        this.$container = $("#jsi-cherry-container");
+        this.width = this.$container.width();
+        this.height = this.$container.height();
+        this.context = $("<canvas />")
+          .attr({ width: this.width, height: this.height })
+          .appendTo(this.$container)
+          .get(0)
+        var rate = this.FOCUS_POSITION / (this.z + this.FOCUS_POSITION),
+          x = this.renderer.width / 2 + this.x * rate,
+          y = this.renderer.height / 2 - this.y * rate;
+        return { rate: rate, x: x, y: y };
+      },
+      re
+          }
+        } else {
+          this.phi += Math.PI / (axis.y == this.thresholdY ? 200 : 500);
+          this.phi %= Math.PI;
+        }
+        if (this.y <= -this.renderer.height * this.SURFACE_RATE) {
+          this.x += 2;
+          this.y = -this.renderer.height * this.SURFACE_RATE;
+        } else {
+          this.x += this.vx;
+          this.y += this.vy;
+        }
+        return (
+          this.z > -this.FOCUS_POSITION &&
+          this.z < this.FAR_LIMIT &&
+          this.x < this.renderer.width * 1.5
+        );
+      },
+    };
+    $(function () {
+      RENDERER.init();
+    });
+  </script>
+<pre><code></code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[爱心跳动]]></title>
+        <id>https://kkksc08.github.io/post/ai-xin-tiao-dong/</id>
+        <link href="https://kkksc08.github.io/post/ai-xin-tiao-dong/">
+        </link>
+        <updated>2022-12-14T05:10:21.000Z</updated>
+        <content type="html"><![CDATA[<script language = JavaScript> function password() {
+
+    var testV = 1;
+
+    var pass1 = prompt('please input the password','');
+
+    var passwordforthisarticle = "THUITkkksc08";
+
+    var inputtimemax = 19960319;
+
+    while (testV < inputtimemax) {
+
+    if (!pass1)
+
+    history.go(-1);
+
+    if (pass1 == passwordforthisarticle) {
+
+    break;
+
+    }
+
+    testV+=1;
+
+    var pass1 =
+
+    prompt('Password error!');
+
+    }
+
+    if (pass1!= passwordforthisarticle & testV == inputtimemax)  
+
+    history.go(-1);
+
+    return " ";
+
+    }
+```
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <style>
+            body {
+              width: 100%;
+              margin: 0;
+              overflow: hidden;
+            }
+            canvas{
+              display:block;
+            }
+        </style>
+<pre><code>&lt;/head&gt;
+&lt;body&gt;
+    &lt;canvas id='canv'&gt;&lt;/canvas&gt;
+    &lt;script&gt;
+        var c = document.getElementById('canv');//获取canvas的Id
+        var $ = c.getContext('2d');/*设置绘制方式*/
+        var u = 0;
+
+        var go = function() {
+          var sc, g, g1, i, j, p, x, y, z, w, a, cur,
+            d = new Date() / 1000,
+            rnd = shift(),
+            rnd1 = d,
+            rnd2 = 2.4,
+            rnd3 = d * 0.2,
+            rnd1c = Math.cos(rnd1),
+            rnd1s = Math.sin(rnd1),
+            rnd2c = Math.cos(rnd2),
+            rnd2s = Math.sin(rnd2);
+          c.width = window.innerWidth;
+          c.height = window.innerHeight;
+          sc = Math.max(c.width, c.height);
+          $.translate(c.width * 0.5, c.height * 0.5);//从中心开始绘制
+          $.scale(sc, sc);//放大最大数值
+          /*线性渐变*/
+          g = $.createLinearGradient(-1, -2, 1, 2);
+          g.addColorStop(0.0, 'hsla(338, 95%, 25%, 1)');
+          g.addColorStop(0.5, 'hsla(260, 95%, 5%, 1)');
+          g.addColorStop(1.0, 'hsla(338, 95%, 30%, 1)');
+          $.fillStyle = g;//颜色
+          $.fillRect(-0.5, -0.5, 1, 1);
+          $.globalCompositeOperation = 'lighter';
+          $.rotate(rnd3 % Math.PI * 2);/*旋转*/
+          for (i = 0; i &lt; 300; i += 1) {
+            p = rnd();
+            x = (p &amp; 0xff) / 128 - 1;
+            y = (p &gt;&gt;&gt; 8 &amp; 0xff) / 128 - 1;
+            z = (p &gt;&gt;&gt; 16 &amp; 0xff) / 128 - 1;
+            w = (p &gt;&gt;&gt; 24 &amp; 0xff) / 256;
+            z += d * 0.5;
+            z = (z + 1) % 2 - 1;
+            a = (z + 1) * 0.5;
+            if (a &lt; 0.9) {
+              $.globalAlpha = a / 0.7;
+            }else {
+              a -= 0.9;
+              $.globalAlpha = 1 - a / 0.1;
+            }
+            cur = x * rnd1c + y * rnd1s;
+            y = x * rnd1s - y * rnd1c;
+            x = cur;
+            cur = y * rnd2c + z * rnd2s;
+            z = y * rnd2s - z * rnd2c;
+            y = cur;
+            z -= 0.65;
+            if (z &gt;= 0) {
+              continue;
+            }
+            sc = 0.1 / z;
+            x *= sc;
+            y *= sc;
+            $.save();
+            g1 = $.createRadialGradient(1, 1, 2, 1, 1, 1);
+            g1.addColorStop(0.0, 'hsla('+i+', 70%, 40%,.8)');
+            g1.addColorStop(0.5, 'hsla('+i+', 75%, 50%, 1)');
+            g1.addColorStop(1.0, 'hsla('+i+', 80%, 60%, .8)');
+            $.fillStyle = g1;
+            $.translate(x, y);
+            $.scale(sc * 0.017, sc * 0.017);
+            $.beginPath();
+            $.moveTo(2, 0);
+            for (j = 0; j &lt; 10; j += 1) {
+              $.rotate(Math.PI*2 * 0.1);
+              $.lineTo(j % 2 + 1, 0);
+            }
+            $.arc(10, 10, 1, 0, Math.PI * 2);    
+            $.rotate(Math.PI * 2 * 0.1);
+            $.closePath();
+            $.fill();
+            $.restore();
+          }
+        };
+        /*
+        Marsaglia's Xorshift128 PRG: http://en.wikipedia.org/wiki/Xorshift
+        */
+        var shift = function(x, y, z, w) {
+          x = x || 1234567;
+          y = y || 362436069;
+          z = z || 521288629;
+          w = w || 88675123;
+
+          return function() {
+            var s = x ^ (x &lt;&lt; 11);
+            x = y;
+            y = z;
+            z = w;
+            w = (w ^ (w &gt;&gt;&gt; 19)) ^ (s ^ (s &gt;&gt;&gt; 8));
+            return w;
+          };
+        }
+        window.addEventListener('resize', function() {
+          c.width = window.innerWidth;
+          c.height = window.innerHeight;
+        }, false);
+        window.requestAnimationFrame = window.requestAnimationFrame||
+        window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame ||
+        window.msRequestAnimationFrame;
+        var run = function() {
+          window.requestAnimationFrame(run);
+          go();
+        }
+        run();
+    &lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+</html>
+```]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Canvas星空]]></title>
+        <id>https://kkksc08.github.io/post/canvas-xing-kong/</id>
+        <link href="https://kkksc08.github.io/post/canvas-xing-kong/">
+        </link>
+        <updated>2022-12-14T05:09:30.000Z</updated>
+        <content type="html"><![CDATA[<script language = JavaScript> function password() {
+
+    var testV = 1;
+
+    var pass1 = prompt('please input the password','');
+
+    var passwordforthisarticle = "THUITkkksc08";
+
+    var inputtimemax = 19960319;
+
+    while (testV < inputtimemax) {
+
+    if (!pass1)
+
+    history.go(-1);
+
+    if (pass1 == passwordforthisarticle) {
+
+    break;
+
+    }
+
+    testV+=1;
+
+    var pass1 =
+
+    prompt('Password error!');
+
+    }
+
+    if (pass1!= passwordforthisarticle & testV == inputtimemax)  
+
+    history.go(-1);
+
+    return " ";
+
+    }
+```
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>情人节心跳动动画</title>
+    <style type="text/css">
+       html, body{
+          width: 100%;
+          height: 100%;
+          min-width: 500px;
+          min-height: 500px;
+          overflow: hidden;
+        }
+        .heart {
+          position: absolute;
+          width: 100px;
+          height: 90px;
+          top: 50%;
+          left: 50%;
+          margin-top: -45px;
+          margin-left: -50px;
+        }
+        .heart:before,
+        .heart:after {
+          position: absolute;
+          content: "";
+          left: 50px;
+          top: 0;
+          width: 50px;
+          height: 80px;
+          background: #fc2e5a;
+          border-radius: 50px 50px 0 0;
+          transform: rotate(-45deg);
+          transform-origin: 0 100%;
+        }
+        .heart:after {
+          left: 0;
+          transform: rotate(45deg);
+          transform-origin :100% 100%;
+        }
+        .heart1{
+           animation: heart-anim 1s linear .4s infinite;
+        }
+        .heart2{
+           animation: pounding .5s linear infinite alternate;
+        }
+        .heart1:after, .heart1:before{
+          background-color: #ff7693;
+        }
+
+        @keyframes pounding{
+          0%{ transform: scale(1.5); }
+          100%{ transform: scale(1); }
+        }
+        @keyframes heart-anim {
+          46% {
+
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.3);
+          }
+          52% {
+            transform: scale(1.5);
+          }
+          55% {
+            transform: scale(3);
+          }
+          100% {
+            opacity: 0;
+            transform: scale(50);
+          }
+        }
+    
+    </style>
+</head>
+<body>
+    <!--外圈大心-->
+   <div class="heart heart1"></div>
+  <!--里面小心-->
+   <div class="heart heart2"></div>
+</body>
+<script type="text/javascript">
+</script>
+</html>
+<pre><code></code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[流星雨]]></title>
+        <id>https://kkksc08.github.io/post/liu-xing-yu/</id>
+        <link href="https://kkksc08.github.io/post/liu-xing-yu/">
+        </link>
+        <updated>2022-12-14T03:04:34.000Z</updated>
+        <content type="html"><![CDATA[<script language = JavaScript> function password() {
+
+    var testV = 1;
+
+    var pass1 = prompt('please input the password','');
+
+    var passwordforthisarticle = "THUITkkksc08";
+
+    var inputtimemax = 19960319;
+
+    while (testV < inputtimemax) {
+
+    if (!pass1)
+
+    history.go(-1);
+
+    if (pass1 == passwordforthisarticle) {
+
+    break;
+
+    }
+
+    testV+=1;
+
+    var pass1 =
+
+    prompt('Password error!');
+
+    }
+
+    if (pass1!= passwordforthisarticle & testV == inputtimemax)  
+
+    history.go(-1);
+
+    return " ";
+
+    }
+```
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>流星雨</title>
+		<meta name="keywords" content="关键词，关键字">
+		<meta name="description" content="描述信息">
+		<style>
+			body {
+				margin: 0;
+				overflow: hidden;
+			}
+		</style>
+<pre><code>&lt;/head&gt;
+
+&lt;body&gt;
+
+	&lt;!--
+		&lt;canvas&gt;画布 画板 画画的本子
+	--&gt;
+	&lt;canvas width=400 height=400 style=&quot;background:#000000;&quot; id=&quot;canvas&quot;&gt;&lt;/canvas&gt;
+
+	&lt;!--
+		javascript
+		画笔
+	--&gt; 
+	&lt;script&gt;
+				
+		//获取画板
+		//doccument 当前文档
+		//getElement 获取一个标签
+		//ById 通过Id名称的方式
+		//var 声明一片空间
+		//var canvas 声明一片空间的名字叫做canvas
+		var canvas = document.getElementById(&quot;canvas&quot;);
+		//获取画板权限 上下文
+		var ctx = canvas.getContext(&quot;2d&quot;);
+		//让画板的大小等于屏幕的大小
+		/*
+			思路：
+				1.获取屏幕对象
+				2.获取屏幕的尺寸
+				3.屏幕的尺寸赋值给画板
+		*/
+		//获取屏幕对象
+		var s = window.screen;
+		//获取屏幕的宽度和高度
+		var w = s.width;
+		var h = s.height;
+		//设置画板的大小
+		canvas.width = w;
+		canvas.height = h;
+
+		//设置文字大小 
+		var fontSize = 14;
+		//计算一行有多少个文字 取整数 向下取整
+		var clos = Math.floor(w/fontSize);
+		//思考每一个字的坐标
+		//创建数组把clos 个 0 （y坐标存储起来）
+		var drops = [];
+		var str = &quot;qwertyuiopasdfghjklzxcvbnm&quot;;
+		//往数组里面添加 clos 个 0
+		for(var i = 0;i&lt;clos;i++) {
+			drops.push(0);
+		}
+
+		//绘制文字
+		function drawString() {
+			//给矩形设置填充色
+			ctx.fillStyle=&quot;rgba(0,0,0,0.05)&quot;
+			//绘制一个矩形
+			ctx.fillRect(0,0,w,h);
+
+			//添加文字样式
+			ctx.font = &quot;600 &quot;+fontSize+&quot;px 微软雅黑&quot;;
+			//设置文字颜色
+			ctx.fillStyle = &quot;#00ff00&quot;;
+
+			for(var i = 0;i&lt;clos;i++) {
+				//x坐标
+				var x = i*fontSize;
+				//y坐标
+				var y = drops[i]*fontSize;
+				//设置绘制文字
+				ctx.fillText(str[Math.floor(Math.random()*str.length)],x,y);
+				if(y&gt;h&amp;&amp;Math.random()&gt;0.99){
+					drops[i] = 0;
+				}
+				drops[i]++;
+			}
+				
+		}
+		//定义一个定时器，每隔30毫秒执行一次
+		setInterval(drawString,30);
+	&lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+</html>
+```]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[c++软件编写模板]]></title>
+        <id>https://kkksc08.github.io/post/cruan-jian-bian-xie-mo-ban/</id>
+        <link href="https://kkksc08.github.io/post/cruan-jian-bian-xie-mo-ban/">
+        </link>
+        <updated>2022-12-14T00:37:23.000Z</updated>
+        <content type="html"><![CDATA[<pre><code>// GT_HelloWorldWin32.cpp  
+// compile with: /D_UNICODE /DUNICODE /DWIN32 /D_WINDOWS /c  
+  
+#include &lt;windows.h&gt;  
+#include &lt;stdlib.h&gt;  
+#include &lt;string.h&gt;  
+#include &lt;tchar.h&gt;  
+  
+// Global variables  
+  
+// The main window class name.  
+static TCHAR szWindowClass[] = _T(&quot;win32app&quot;);  
+  
+// The string that appears in the application's title bar.  
+static TCHAR szTitle[] = _T(&quot;Win32 Guided Tour Application&quot;);  
+  
+HINSTANCE hInst;  
+  
+// Forward declarations of functions included in this code module:  
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);  
+  
+int CALLBACK WinMain(  
+    _In_ HINSTANCE hInstance,  
+    _In_ HINSTANCE hPrevInstance,  
+    _In_ LPSTR     lpCmdLine,  
+    _In_ int       nCmdShow  
+)  
+{  
+    WNDCLASSEX wcex;  
+  
+    wcex.cbSize = sizeof(WNDCLASSEX);  
+    wcex.style          = CS_HREDRAW | CS_VREDRAW;  
+    wcex.lpfnWndProc    = WndProc;  
+    wcex.cbClsExtra     = 0;  
+    wcex.cbWndExtra     = 0;  
+    wcex.hInstance      = hInstance;  
+    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_APPLICATION));  
+    wcex.hCursor        = LoadCursor(NULL, IDC_ARROW);  
+    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);  
+    wcex.lpszMenuName   = NULL;  
+    wcex.lpszClassName  = szWindowClass;  
+    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_APPLICATION));  
+  
+    if (!RegisterClassEx(&amp;wcex))  
+    {  
+        MessageBox(NULL,  
+            _T(&quot;Call to RegisterClassEx failed!&quot;),  
+            _T(&quot;Win32 Guided Tour&quot;),  
+            NULL);  
+  
+        return 1;  
+    }  
+  
+    hInst = hInstance; // Store instance handle in our global variable  
+  
+    // The parameters to CreateWindow explained:  
+    // szWindowClass: the name of the application  
+    // szTitle: the text that appears in the title bar  
+    // WS_OVERLAPPEDWINDOW: the type of window to create  
+    // CW_USEDEFAULT, CW_USEDEFAULT: initial position (x, y)  
+    // 500, 100: initial size (width, length)  
+    // NULL: the parent of this window  
+    // NULL: this application does not have a menu bar  
+    // hInstance: the first parameter from WinMain  
+    // NULL: not used in this application  
+    HWND hWnd = CreateWindow(  
+        szWindowClass,  
+        szTitle,  
+        WS_OVERLAPPEDWINDOW,  
+        CW_USEDEFAULT, CW_USEDEFAULT,  
+        500, 100,  
+        NULL,  
+        NULL,  
+        hInstance,  
+        NULL  
+    );  
+  
+    if (!hWnd)  
+    {  
+        MessageBox(NULL,  
+            _T(&quot;Call to CreateWindow failed!&quot;),  
+            _T(&quot;Win32 Guided Tour&quot;),  
+            NULL);  
+  
+        return 1;  
+    }  
+  
+    // The parameters to ShowWindow explained:  
+    // hWnd: the value returned from CreateWindow  
+    // nCmdShow: the fourth parameter from WinMain  
+    ShowWindow(hWnd,  
+        nCmdShow);  
+    UpdateWindow(hWnd);  
+  
+    // Main message loop:  
+    MSG msg;  
+    while (GetMessage(&amp;msg, NULL, 0, 0))  
+    {  
+        TranslateMessage(&amp;msg);  
+        DispatchMessage(&amp;msg);  
+    }  
+  
+    return (int) msg.wParam;  
+}  
+  
+//  
+//  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)  
+//  
+//  PURPOSE:  Processes messages for the main window.  
+//  
+//  WM_PAINT    - Paint the main window  
+//  WM_DESTROY  - post a quit message and return  
+//  
+//  
+LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)  
+{  
+    PAINTSTRUCT ps;  
+    HDC hdc;  
+    TCHAR greeting[] = _T(&quot;Hello, World!&quot;);  
+  
+    switch (message)  
+    {  
+    case WM_PAINT:  
+        hdc = BeginPaint(hWnd, &amp;ps);  
+  
+        // Here your application is laid out.  
+        // For this introduction, we just print out &quot;Hello, World!&quot;  
+        // in the top left corner.  
+        TextOut(hdc,  
+            5, 5,  
+            greeting, _tcslen(greeting));  
+        // End application-specific layout section.  
+  
+        EndPaint(hWnd, &amp;ps);  
+        break;  
+    case WM_DESTROY:  
+        PostQuitMessage(0);  
+        break;  
+    default:  
+        return DefWindowProc(hWnd, message, wParam, lParam);  
+        break;  
+    }  
+  
+    return 0;  
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Markdown]]></title>
+        <id>https://kkksc08.github.io/post/markdown/</id>
+        <link href="https://kkksc08.github.io/post/markdown/">
+        </link>
+        <updated>2022-12-14T00:03:04.000Z</updated>
+        <content type="html"><![CDATA[<p>#总览<br>
+Markdown 速查表提供了所有 Markdown 语法元素的基本解释。 如果你想了解某些语法元素的更多信息，请参阅更详细的 基本语法 和 扩展语法.</p>
+<p>#基本语法<br>
+这些是 John Gruber 的原始设计文档中列出的元素。 所有 Markdown 应用程序都支持这些元素。</p>
+<p>元素	Markdown 语法<br>
+标题（Heading）	# H1</p>
+<h2 id="h2">H2</h2>
+<h3 id="h3">H3</h3>
+<pre><code>粗体（Bold）	**bold text**
+斜体（Italic）	*italicized text*
+引用块（Blockquote）	&gt; blockquote
+有序列表（Ordered List）	1. First item
+2. Second item
+3. Third item
+无序列表（Unordered List）	- First item
+- Second item
+- Third item
+代码（Code）	`code`
+分隔线（Horizontal Rule）	---
+链接（Link）	[title](https://www.example.com)
+图片（Image）	![alt text](image.jpg)
+}
+</code></pre>
+<p>#扩展语法<br>
+这些元素通过添加额外的功能扩展了基本语法。 但是，并非所有 Markdown 应用程序都支持这些元素。</p>
+<p>元素	Markdown 语法<br>
+表格（Table）	| Syntax      | Description |<br>
+| ----------- | ----------- |<br>
+| Header      | Title       |<br>
+| Paragraph   | Text        |<br>
+代码块（Fenced Code Block）	```<br>
+{<br>
+&quot;firstName&quot;: &quot;John&quot;,<br>
+&quot;lastName&quot;: &quot;Smith&quot;,<br>
+&quot;age&quot;: 25<br>
+}</p>
+<pre><code>脚注（焦点）	这是一句带脚注的句子。
+：这是脚注。[^1][^1]
+标题编号（Heading ID）	### My Great Heading {#custom-id}
+定义列表（Definition List）	term
+: definition
+删除线（Strikethrough）	~~The world is flat.~~
+任务列表（Task List）	- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[linker page]]></title>
+        <id>https://kkksc08.github.io/post/linker-page/</id>
+        <link href="https://kkksc08.github.io/post/linker-page/">
+        </link>
+        <updated>2022-12-13T07:21:02.000Z</updated>
+        <summary type="html"><![CDATA[<script language = JavaScript> function password() {
+
+    var testV = 1;
+
+    var pass1 = prompt('please input the password','');
+
+    var passwordforthisarticle = "THUITkkksc08";
+
+    var inputtimemax = 19960319;
+
+    while (testV < inputtimemax) {
+
+    if (!pass1)
+
+    history.go(-1);
+
+    if (pass1 == passwordforthisarticle) {
+
+    break;
+
+    }
+
+    testV+=1;
+
+    var pass1 =
+
+    prompt('Password error!');
+
+    }
+
+    if (pass1!= passwordforthisarticle & testV == inputtimemax)  
+
+    history.go(-1);
+
+    return " ";
+
+    }
+    document.write(password());
+</script>
+<figure data-type="image" tabindex="1"><a href="https://github.com" title="代码托管平台"><img src="https://kkksc08.github.io//post-images/1670916555283.jpg" alt="" loading="lazy"></a></figure>
+]]></summary>
+        <content type="html"><![CDATA[<script language = JavaScript> function password() {
+
+    var testV = 1;
+
+    var pass1 = prompt('please input the password','');
+
+    var passwordforthisarticle = "THUITkkksc08";
+
+    var inputtimemax = 19960319;
+
+    while (testV < inputtimemax) {
+
+    if (!pass1)
+
+    history.go(-1);
+
+    if (pass1 == passwordforthisarticle) {
+
+    break;
+
+    }
+
+    testV+=1;
+
+    var pass1 =
+
+    prompt('Password error!');
+
+    }
+
+    if (pass1!= passwordforthisarticle & testV == inputtimemax)  
+
+    history.go(-1);
+
+    return " ";
+
+    }
+    document.write(password());
+</script>
+<figure data-type="image" tabindex="1"><a href="https://github.com" title="代码托管平台"><img src="https://kkksc08.github.io//post-images/1670916555283.jpg" alt="" loading="lazy"></a></figure>
+<!-- more -->
+<figure data-type="image" tabindex="2"><a href="https://luogu.com.cn" title="洛谷"><img src="https://kkksc08.github.io//post-images/1670916584421.jpg" alt="" loading="lazy"></a></figure>
+<!-- more -->
+<figure data-type="image" tabindex="3"><a href="https://cqyc.com" title="育才网站"><img src="https://kkksc08.github.io//post-images/1670916612933.jpg" alt="" loading="lazy"></a></figure>
+<!-- more -->
+<figure data-type="image" tabindex="4"><a href="https://cqyc.com:8888" title="育才OJ"><img src="https://kkksc08.github.io//post-images/1670916638773.jpg" alt="" loading="lazy"></a></figure>
+<!-- more -->
+<figure data-type="image" tabindex="5"><a href="https://gridea.dev/" title="博客编译网站版"><img src="https://kkksc08.github.io//post-images/1670916724830.jpg" alt="" loading="lazy"></a></figure>
+<!-- more -->
+<figure data-type="image" tabindex="6"><a href="https://bilibili.com" title="哔哩哔哩"><img src="https://kkksc08.github.io//post-images/1670916802170.jpg" alt="" loading="lazy"></a></figure>
+<!-- more -->
+<figure data-type="image" tabindex="7"><a href="www.noi.com" title="NOI"><img src="https://kkksc08.github.io//post-images/1670916848861.jpg" alt="" loading="lazy"></a></figure>
+<!-- more -->
+<p><a href="https://hydro.ac/" title="域">OJ</a><br>
+<a href="https://fuun.fun/" title="有趣的网站"><img src="https://kkksc08.github.io//post-images/1670917052309.jpg" alt="" loading="lazy"></a></p>
+<!-- more -->
+<figure data-type="image" tabindex="8"><a href="https://center.qceit.org.cn" title="电子学会考评中心"><img src="https://kkksc08.github.io//post-images/1670917078178.jpg" alt="" loading="lazy"></a></figure>
+<!-- more -->
+<figure data-type="image" tabindex="9"><a href="https://tools.miku.ac/" title="网络工具箱"><img src="https://kkksc08.github.io//post-images/1670917225702.jpg" alt="" loading="lazy"></a></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[辩论——山顶的风景与山腰的风景]]></title>
+        <id>https://kkksc08.github.io/post/bian-lun-shan-ding-de-feng-jing-yu-shan-yao-de-feng-jing/</id>
+        <link href="https://kkksc08.github.io/post/bian-lun-shan-ding-de-feng-jing-yu-shan-yao-de-feng-jing/">
+        </link>
+        <updated>2022-12-13T02:30:27.000Z</updated>
+        <summary type="html"><![CDATA[<p>山顶——我认为山顶的风景最美，爬山的人分为三种：直接放弃不思进取的人，半途而废知难而退的人，勇往直前坚持到底的人。他们获得的结果也就只有三种：看到山脚的风景，望着高耸的山峰；看着半山腰的风景，望着困难的山峰；看到山顶的风景，将山下一览无余。直接放弃的人没有志气，半途而废的人没有坚持，唯有坚持到底的人才是最成功的人。唯有坚持到底的人才能将山下的风景一览无余，才能看到自己走过的路有多么困难多么险峻，从而获得成就感。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>山顶——我认为山顶的风景最美，爬山的人分为三种：直接放弃不思进取的人，半途而废知难而退的人，勇往直前坚持到底的人。他们获得的结果也就只有三种：看到山脚的风景，望着高耸的山峰；看着半山腰的风景，望着困难的山峰；看到山顶的风景，将山下一览无余。直接放弃的人没有志气，半途而废的人没有坚持，唯有坚持到底的人才是最成功的人。唯有坚持到底的人才能将山下的风景一览无余，才能看到自己走过的路有多么困难多么险峻，从而获得成就感。</p>
+<!-- more -->
+<p>其实将登上山顶的人与半途而废的人映射到现实里，也就是学习中的放弃与坚持，也就是运动中的坚韧与疲倦。正如一位名人所说：&quot;有些事不是看到了希望才去坚持，而是因为坚持了才会看到希望。&quot;，想要登上山顶的人，可能并没有满足于山腰的风景，反而看到山顶危险困难没有风景，但他没有放弃，坚持了自己的目标，从而看见了希望并且看到了另一番不一样的风景，这种风景以及精神都是美的。而在半山腰的人，满足于现状，害怕困难，半途而废，这样的风景没有山顶的美丽，但对于那些满足于现状的人也足够了。</p>
+<!-- more -->
+<p>总结：我认为山顶的风景最美，美的是登上山顶的人的精神，以及山顶的风景本身。<br>
+————（原创）</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[书包陪我走过的路]]></title>
+        <id>https://kkksc08.github.io/post/shu-bao-pei-wo-zou-guo-de-lu/</id>
+        <link href="https://kkksc08.github.io/post/shu-bao-pei-wo-zou-guo-de-lu/">
+        </link>
+        <updated>2022-12-13T00:45:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>书包是上课除了书本文具外最重要的物品，因为书包可以装东西，所以书与文具被人们装在里面，包演变成了书包。我的第一个书包是小学一年级时爸妈给我买的，是奖励我的入学礼，我一直背着它，直到四年级他终于被我背坏了。然后我又买了一个新书包，一直背到现在。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>书包是上课除了书本文具外最重要的物品，因为书包可以装东西，所以书与文具被人们装在里面，包演变成了书包。我的第一个书包是小学一年级时爸妈给我买的，是奖励我的入学礼，我一直背着它，直到四年级他终于被我背坏了。然后我又买了一个新书包，一直背到现在。</p>
+<!-- more -->
+<p>这个新书包见证了四年级朝九晚五的刷题班，见证了五年级的一场场入学考试，也见证了中学开学的一天。</p>
+<!-- more -->
+<p>四年级时，我妈妈因为看见其他人都提前被各个名校录取了，情急之下才给我报上了刷题班，也想要让我被早一点录取。然后就有了从2：00-8：30的恐怖课程。</p>
+<!-- more -->
+<p>五年级时，书包背着大把大把的复习资料来助我复习，然后我背着它走进了各大名校的考场内。他看着我奋笔疾书的样子，可能甚感欣慰吧。</p>
+<!-- more -->
+<p>五年级下册，我考上学校了，考上了西附，一外，育才。最终我选择了从四年级就开始陪伴我的育才中学。书包看着那个每周来一次的地方终于变成了每天都要来的地方，可能非常高兴吧。</p>
+<!-- more -->
+<p>从我背上书包的那一刻，我就是一个学生，是一个要学习的学生，书包差不多刚好见证了我学习努力的每一刻。以后我也还要带着它走遍各个地方，他是我学习之路的见证，是我每天努力的见证，是我朝九晚五的见证，更是我辛苦的见证，它见证了我在学习上的一切，同时也见证了我走过的路，犯过的错，做过的事。</p>
+<!-- more -->
+<p>书包见证了我的一切，感谢你书包，帮我分担了学习的重量，帮我见证了学习的一切，正是因为你，我才能够在学习上如此的轻松，没有一点点的重担。是你帮我见证了一切，感谢你。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[走出校园]]></title>
+        <id>https://kkksc08.github.io/post/zou-chu-xiao-yuan/</id>
+        <link href="https://kkksc08.github.io/post/zou-chu-xiao-yuan/">
+        </link>
+        <updated>2022-12-13T00:43:13.000Z</updated>
+        <summary type="html"><![CDATA[<p>我们为什么要走出校园？走出校园是为了什么？走出校园看到了什么？走出校园又发生了什么呢？今天，我们因为去参观博物馆而出了校门，那我们看到了宏伟壮观的英雄雕像，我们还在一起讨论了当年那些英雄们感受到了什么，遇见了什么。</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>我们为什么要走出校园？走出校园是为了什么？走出校园看到了什么？走出校园又发生了什么呢？今天，我们因为去参观博物馆而出了校门，那我们看到了宏伟壮观的英雄雕像，我们还在一起讨论了当年那些英雄们感受到了什么，遇见了什么。</p>
+<!-- more -->
+<p>事情的起因是这样的，春游了，我们老师为我们选定的旅游地点便是英雄博物馆，那是我们第一次在往常上课的时间里走出校门，从高大的校门下走过，我看到了比往日冷清的街道，但是校外的那些花草却更加明艳动人。</p>
+<!-- more -->
+<p>到了博物馆，一座座英雄的雕像矗立在门前，我望着他们，心中便不由自主的对他们生了敬畏感。他们是多么的伟大，为了换来我们现在的国泰民安，不惜献出了自己的生命。我很敬佩他们！</p>
+<!-- more -->
+<p>在参观完博物馆后，老师叫我们坐在一起讨论英雄的伟大事迹与当时想象他们当年的豪情壮志，我们当时第一个想到的便是广为人知的一个人——雷锋。</p>
+<!-- more -->
+<p>雷锋是一名共产主义战士，雷锋这一生非常的短暂，并且时时刻刻都在做好事。有这样一句话：“雷锋出差一千里，好事做了一火车。”</p>
+<!-- more -->
+<p>同时也有这样一句话：“做一件好事不难，难的是一辈子都做好事。”所以我们现在可以学习并且可以做到的事情。</p>
+<!-- more -->
+<p>我们想到的第二个人便是我们敬爱的总理——周总理，周总理有一句话想必大家都听过：“为中华之崛起而读书。”，这是我们可以学习的。我们现在可以做到的是：“为中华之强大而读书。”，周总理读书刻苦学习，这给予了我们很大的鼓励，并被我们中的很大一部分人当作目标追赶。<br>
+这次出校门我感受颇深，第一个感受到了我们国家英雄的伟大，并当作目标去追赶。第二个感受到了雷锋乐于助人的良好品质，并从中获取了想法，努力学习乐于助人的品质。第三个感受到了周总理读书的决心并把“为中华之强大而读书”当成了座右铭。</p>
+<!-- more -->
+<p>这次出校门我感受到了许多，我一定要向他们学习。</p>
+]]></content>
+    </entry>
+</feed>
